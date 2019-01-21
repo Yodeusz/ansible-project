@@ -1,0 +1,14 @@
+#url where you can find Telegraf to download
+telegraf_url: https://dl.influxdata.com/telegraf/releases/telegraf-1.8.3-1.x86_64.rpm
+#url where you can find Grafana to download
+grafana_url: https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.0-1.x86_64.rpm
+#url where you can find InfluxDB to download
+influxdb_url: https://dl.influxdata.com/influxdb/releases/influxdb-1.7.1.x86_64.rpm
+#ip where influxdb is installed
+influxdb_ip: 52.58.177.180
+#ip where grafana is installed
+grafana_ip: 52.58.177.180
+#path to app on server
+app_location: /opt/carrental/carrental.jar
+#app username
+app_user: carrent

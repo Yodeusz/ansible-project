@@ -1,0 +1,42 @@
+---
+- name: "Install grafana"
+  yum:
+    name: "{{grafana_url}}"
+    state: present
+- copy:
+    src: templates/grafana.ini
+    dest: /etc/grafana/grafana.ini
+- service:
+    name: grafana-server
+    state: restarted
+- name: "Create influxdb datasource"
+  grafana_datasource:
+    name: "datasource-influxdb"
+    grafana_url: "http://{{grafana_ip}}:8080"
+    grafana_user: "admin"
+    grafana_password: "admin"
+    org_id: "1"
+    ds_type: "influxdb"
+    url: "http://{{influxdb_ip}}:8086"
+    database: "metrics"
+    time_interval: ">10s"
+    tls_ca_cert: "/etc/ssl/certs/ca.pem"
+- name: "Create directory"
+  file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+- name: "Copy dashboard JSON file"
+  copy:
+    src: templates/wonderful.JSON
+    dest: /var/lib/grafana/dashboards/wonderful.JSON
+- name: "Import Grafana Wonderful Dashboard"
+  grafana_dashboard:
+    grafana_url: "http://{{grafana_ip}}:8080"
+    grafana_user: "admin"
+    grafana_password: "admin"
+    state: present
+    slug: kotek
+    message: Updated by ansible
+    overwrite: yes
+    path: /var/lib/grafana/dashboards/wonderful.JSON
+  ignore_errors: yes

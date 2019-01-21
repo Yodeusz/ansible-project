@@ -1,0 +1,18 @@
+---
+- hosts: proxy_nodes
+  become: yes
+  tasks:
+    - include_tasks: tasks/manage_nginx.yml
+- hosts: app_nodes
+  become: yes
+  tasks:
+    - include_tasks: tasks/manage_app.yml
+    - include_tasks: tasks/manage_telegraf.yml
+- hosts: db_nodes
+  become: yes
+  tasks:
+    - include_tasks: tasks/manage_influxdb.yml
+- hosts: stats_nodes
+  become: yes
+  tasks:
+    - include_tasks: tasks/manage_grafana.yml
